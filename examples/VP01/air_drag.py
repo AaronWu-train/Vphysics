@@ -19,4 +19,4 @@ while ball.pos.y >= size:
     ball.v += vec(0, -g, 0) * dt - C_drag * ball.v * dt
     ball.pos += ball.v * dt
 
-msg = text(text = 'final speed = ' + str(ball.v.mag), pos = vec(-10, 15, 0))
+msg = text(text="final speed = " + str(ball.v.mag), pos=vec(-10, 15, 0))
