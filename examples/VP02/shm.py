@@ -4,10 +4,12 @@ g = 9.8
 size, m = 0.05, 0.2
 L, k = 0.5, 15
 
-scene = canvas(width=500, height=500, center=vec(0, -0.2, 0), background=vec(0.5,0.5,0))
+scene = canvas(
+    width=500, height=500, center=vec(0, -0.2, 0), background=vec(0.5, 0.5, 0)
+)
 ceiling = box(length=0.8, height=0.005, width=0.8, color=color.blue)
-ball = sphere(radius = size, color=color.red)
-spring = helix(radius=0.02, thickness =0.01) # default pos = vec(0, 0, 0)
+ball = sphere(radius=size, color=color.red)
+spring = helix(radius=0.02, thickness=0.01)  # default pos = vec(0, 0, 0)
 
 ball.v = vec(0, 0, 0)
 ball.pos = vec(0, -L, 0)
