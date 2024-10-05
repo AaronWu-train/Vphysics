@@ -1,7 +1,7 @@
 from vpython import *
 
 G = 6.673E-11
-mass = {'sun': 1.989E30, 'earth': 5.972E24, 'halley': 2.2E14}
+mass = {'sun': 1.989E30, 'earth': 5.972E24, 'mars':6.4169E23, 'halley': 2.2E14}
 d_at_perihelion = {'earth': 1.495E11, 'mars':2.279E11, 'halley': 8.7665E10}
 v_at_perihelion = {'earth': 2.9783E4, 'mars':2.4077E4, 'halley': 54563.3}
 
