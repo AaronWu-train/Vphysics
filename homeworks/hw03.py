@@ -25,17 +25,27 @@ scene = canvas(
     background=vec(0.5, 0.5, 0),
     range=4e8,
 )
+
+textscene = canvas(
+    align="right",
+    center=vec(0, 0, 0),
+    height=500,
+    width=500,
+    range=250,
+    background=vec(0, 0.5, 0.5),
+)
 # scene.forward = vector(0, -1, 0)
 
 earth_center = -moon_orbit["r"] * mass["moon"] / (mass["earth"] + mass["moon"])
-earth_initial_pos = vector(earth_center * cos(theta), -earth_center * sin(theta), 0) + vector(
-    earth_orbit["r"], 0, 0
-)
+earth_initial_pos = vector(
+    earth_center * cos(theta), -earth_center * sin(theta), 0
+) + vector(earth_orbit["r"], 0, 0)
 earth_initial_v = vector(0, 0, moon_orbit["v"] * mass["moon"] / mass["earth"]) + vector(
     0, 0, -earth_orbit["v"]
 )
 
 earth = sphere(
+    canvas=scene,
     radius=radius["earth"],
     m=mass["earth"],
     pos=earth_initial_pos,
@@ -44,12 +54,13 @@ earth = sphere(
 )
 
 moon_center = moon_orbit["r"] * mass["earth"] / (mass["earth"] + mass["moon"])
-moon_initial_pos = vector(moon_center * cos(theta), -moon_center * sin(theta), 0) + vector(
-    earth_orbit["r"], 0, 0
-)
-moon_initial_v =vector(0, 0, -moon_orbit["v"]) + vector(0, 0, -earth_orbit["v"])
+moon_initial_pos = vector(
+    moon_center * cos(theta), -moon_center * sin(theta), 0
+) + vector(earth_orbit["r"], 0, 0)
+moon_initial_v = vector(0, 0, -moon_orbit["v"]) + vector(0, 0, -earth_orbit["v"])
 
 moon = sphere(
+    canvas=scene,
     radius=radius["moon"],
     pos=moon_initial_pos,
     v=moon_initial_v,
@@ -57,6 +68,7 @@ moon = sphere(
 )
 
 sun = sphere(
+    canvas=scene,
     pos=vector(0, 0, 0),
     radius=radius["sun"],
     m=mass["sun"],
@@ -65,10 +77,10 @@ sun = sphere(
 )
 
 scene.light = []
-local_light(pos=vector(0, 0, 0))
+local_light(pos=vector(0, 0, 0), canvas=scene,)
 
-arrow_moon = arrow(color=color.white, shaftwidth=1000000)
-arrow_earth = arrow(color=color.yellow, shaftwidth=500000)
+arrow_moon = arrow(color=color.white, shaftwidth=1000000, canvas=scene)
+arrow_earth = arrow(color=color.yellow, shaftwidth=500000, canvas=scene)
 arrow_earth.axis = vector(0, 2 * radius["earth"], 0)
 
 t = 0
@@ -76,6 +88,16 @@ dt = 60 * 60 * 8
 
 record = 0
 recorded = False
+print_val = 0
+text(
+    canvas=textscene,
+    text="Calculating period of the precession of moon’s orbit:",
+    pos=vector(-200, 150, 0),
+    height=13,
+    color=color.white,
+)
+textpos = vector(-200, 120, 0)
+
 
 while True:
     t += dt
@@ -88,7 +110,6 @@ while True:
         G_force(mass["earth"], mass["moon"], earth.pos - moon.pos) / mass["earth"]
         + G_force(mass["earth"], mass["sun"], earth.pos - sun.pos) / mass["earth"]
     )
-    
 
     moon.v += moon.a * dt
     moon.pos += moon.v * dt
@@ -99,7 +120,11 @@ while True:
     scene.center = earth.pos
     arrow_moon.pos = earth.pos
     arrow_earth.pos = earth.pos
-    arrow_moon.axis = 0.3 * moon_orbit["r"] * cross(norm(moon.pos - earth.pos), norm(moon.v - earth.v))
+    arrow_moon.axis = (
+        0.3
+        * moon_orbit["r"]
+        * cross(norm(moon.pos - earth.pos), norm(moon.v - earth.v))
+    )
 
     if (
         arrow_moon.axis.x > 0 and arrow_moon.axis.z < 0 and recorded == False
@@ -107,6 +132,17 @@ while True:
         recorded = True
         if record != 0 and (t - record) / 60 / 60 / 24 > 365:
             print(str((t - record) / 60 / 60 / 24) + " days")
+            print_str = str((t - record) / 60 / 60 / 24)
+            text(
+                canvas=textscene,
+                text="Period of the precession: " + print_str + " days",
+                pos=textpos,
+                height=12,
+                color=color.white,
+            ) 
+            textpos += vec(0, -20, 0)
         record = t
+
+
     elif arrow_moon.axis.x < 0:  # quadrant II, III --> reset
         recorded = False
