@@ -35,13 +35,33 @@ for i in range(N):
 
 # plot 1
 instant_plot = graph(width=400, align="left", xtitle="Time (s)", ytitle="Energy (J)")
-k_plot = gcurve(graph=instant_plot, color=color.blue, width=2.5, label = "kinetic energy", legend=True)
-p_plot = gcurve(graph=instant_plot, color=color.orange, width=2.5, label = "potential energy", legend=True)
+k_plot = gcurve(
+    graph=instant_plot, color=color.blue, width=2.5, label="kinetic energy", legend=True
+)
+p_plot = gcurve(
+    graph=instant_plot,
+    color=color.orange,
+    width=2.5,
+    label="potential energy",
+    legend=True,
+)
 
 # plot 2
 average_plot = graph(width=400, align="left", xtitle="Time (s)", ytitle="Energy (J)")
-avg_k_plot = gcurve(graph=average_plot, color=color.blue, width=2.5, label = "average kinetic energy", legend=True)
-avg_p_plot = gcurve(graph=average_plot, color=color.orange, width=2.5, label = "average potential energy", legend=True)
+avg_k_plot = gcurve(
+    graph=average_plot,
+    color=color.blue,
+    width=2.5,
+    label="average kinetic energy",
+    legend=True,
+)
+avg_p_plot = gcurve(
+    graph=average_plot,
+    color=color.orange,
+    width=2.5,
+    label="average potential energy",
+    legend=True,
+)
 avg_k = 0
 avg_p = 0
 
@@ -60,8 +80,9 @@ while True:
         balls[i].a = g + spring_force / m
         balls[i].v += balls[i].a * dt
         balls[i].pos += balls[i].v * dt
-        if (i < 4 
-            and 0.4 >= mag(balls[i].pos - balls[i + 1].pos) 
+        if (
+            i < 4
+            and 0.4 >= mag(balls[i].pos - balls[i + 1].pos)
             and dot(balls[i].pos - balls[i + 1].pos, balls[i].v - balls[i + 1].v) <= 0
         ):
             balls[i].v, balls[i + 1].v = balls[i + 1].v, balls[i].v

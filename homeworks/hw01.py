@@ -23,8 +23,16 @@ floor = box(length=30, height=0.01, width=4, color=color.blue)
 ball = sphere(radius=size, color=color.red, make_trail=1, trail_radius=size / 5)
 a1 = arrow(color=color.green, shaftwidth=0.05)
 
-oscillation = graph(width=450, align="right", center=vec(0, 0, 0), xtitle="Time (s)", ytitle = "Velocity (m/s)")
-funct1 = gcurve(graph=oscillation, color=color.blue, width=4, label = "velocity", legend=True)
+oscillation = graph(
+    width=450,
+    align="right",
+    center=vec(0, 0, 0),
+    xtitle="Time (s)",
+    ytitle="Velocity (m/s)",
+)
+funct1 = gcurve(
+    graph=oscillation, color=color.blue, width=4, label="velocity", legend=True
+)
 
 ball.pos = vec(-15, size, 0)
 ball.v = vec(20 * cos(theta), 20 * sin(theta), 0)
