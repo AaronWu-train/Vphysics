@@ -7,7 +7,7 @@ radius = {
     "earth": 6.371e6 * 10,
     "moon": 1.317e6 * 10,
     "sun": 6.95e8 * 10,
-}  # 10 times larger for better view
+}
 earth_orbit = {"r": 1.495e11, "v": 2.9783e4}
 moon_orbit = {"r": 3.84e8, "v": 1.022e3}
 theta = 5.145 * pi / 180.0
@@ -23,7 +23,6 @@ scene = canvas(
     height=900,
     width=900,
     background=vec(0.5, 0.5, 0),
-    range=4e8,
 )
 
 textscene = canvas(
@@ -79,7 +78,7 @@ sun = sphere(
 scene.light = []
 local_light(pos=vector(0, 0, 0), canvas=scene,)
 
-arrow_moon = arrow(color=color.white, shaftwidth=1000000, canvas=scene)
+arrow_moon = arrow(color=color.white, shaftwidth=900000, canvas=scene)
 arrow_earth = arrow(color=color.yellow, shaftwidth=500000, canvas=scene)
 arrow_earth.axis = vector(0, 2 * radius["earth"], 0)
 
@@ -128,7 +127,7 @@ while True:
 
     if (
         arrow_moon.axis.x > 0 and arrow_moon.axis.z < 0 and recorded == False
-    ):  # quadrant IV --> record ONCE
+    ):
         recorded = True
         if record != 0 and (t - record) / 60 / 60 / 24 > 365:
             print(str((t - record) / 60 / 60 / 24) + " days")
@@ -144,5 +143,5 @@ while True:
         record = t
 
 
-    elif arrow_moon.axis.x < 0:  # quadrant II, III --> reset
+    elif arrow_moon.axis.x < 0: 
         recorded = False
