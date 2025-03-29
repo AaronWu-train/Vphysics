@@ -76,7 +76,10 @@ sun = sphere(
 )
 
 scene.light = []
-local_light(pos=vector(0, 0, 0), canvas=scene,)
+local_light(
+    pos=vector(0, 0, 0),
+    canvas=scene,
+)
 
 arrow_moon = arrow(color=color.white, shaftwidth=900000, canvas=scene)
 arrow_earth = arrow(color=color.yellow, shaftwidth=500000, canvas=scene)
@@ -125,9 +128,7 @@ while True:
         * cross(norm(moon.pos - earth.pos), norm(moon.v - earth.v))
     )
 
-    if (
-        arrow_moon.axis.x > 0 and arrow_moon.axis.z < 0 and recorded == False
-    ):
+    if arrow_moon.axis.x > 0 and arrow_moon.axis.z < 0 and recorded == False:
         recorded = True
         if record != 0 and (t - record) / 60 / 60 / 24 > 365:
             print(str((t - record) / 60 / 60 / 24) + " days")
@@ -138,10 +139,9 @@ while True:
                 pos=textpos,
                 height=12,
                 color=color.white,
-            ) 
+            )
             textpos += vec(0, -20, 0)
         record = t
 
-
-    elif arrow_moon.axis.x < 0: 
+    elif arrow_moon.axis.x < 0:
         recorded = False
