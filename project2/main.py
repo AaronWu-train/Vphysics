@@ -21,7 +21,7 @@ E = voltage / plate_separation  # 電場強度 (V/m)
 
 # ============== 這裡開始：定義電場、磁場向量與電荷 ==============
 E_vec = vp.vector(0, -E, 0)     # 與原來效果相同：受力仍向 +y
-B_strength = 2.5e-4             # 垂直入紙面 (+z) 2 mT
+B_strength = 2.5e-4             # 垂直入紙面 (-z) 2 mT
 B_vec = vp.vector(0, 0, -B_strength)
 # ============================================================
 
@@ -67,7 +67,7 @@ t = 0
 # 介面資訊
 info_text = vp.wtext(text=f"電壓: {voltage} V\n"
                           f"電場強度: {E:.2e} V/m\n"
-                          f"磁場強度: {B_strength:.2e} T (+z)\n"
+                          f"磁場強度: {B_strength:.2e} T (-z)\n"
                           f"初始速度: {v0:.2e} m/s\n")
 
 print(f"模擬參數:")
